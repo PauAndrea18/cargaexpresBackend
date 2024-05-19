@@ -10,6 +10,7 @@ import com.backend.cargaexpress.repositories.RemisionRepository;
 import com.backend.cargaexpress.repositories.ReporteUbicacionRepository;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,13 +41,13 @@ public class EstadisticasService {
         return totalTiempo / remisiones.size();
     }
 
-    public double obtenerNumeroDeToneladasTransportadasPorMes(String placaCamion, int mes, int año) {
-        List<Remision> remisiones = remisionRepository.findByPlacaCamionAndMesAndAño(placaCamion, mes, año);
+    public double obtenerNumeroDeToneladasTransportadasPorMes(String placaCamion, LocalDateTime fechaHora) {
+        List<Remision> remisiones = remisionRepository.findByPlacaCamionAndFechaHoraEntrega(placaCamion, fechaHora);
         return remisiones.stream().mapToDouble(Remision::getPesoTotal).sum();
     }
 
-    public double obtenerDistanciaRecorridaDiariamentePorCamion(String remisionId, LocalDate fecha) {
-        List<ReporteUbicacion> reportes = reporteUbicacionRepository.findByRemisionIdAndFecha(remisionId, fecha);
+    public double obtenerDistanciaRecorridaDiariamentePorCamion(String remisionId, LocalDateTime fecha) {
+        List<ReporteUbicacion> reportes = reporteUbicacionRepository.findByRemisionIdAndFechaHoraReporte(remisionId, fecha);
         return reportes.stream().mapToDouble(ReporteUbicacion::getDistanciaRecorrida).sum();
     }
 }

@@ -6,6 +6,7 @@ package com.backend.cargaexpress.controllers;
 
 import com.backend.cargaexpress.services.EstadisticasService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,12 +35,12 @@ public class EstadisticasController {
     }
 
     @GetMapping("/toneladas-transportadas")
-    public double obtenerNumeroDeToneladasTransportadasPorMes(@RequestParam String placaCamion, @RequestParam int mes, @RequestParam int año) {
-        return estadisticasService.obtenerNumeroDeToneladasTransportadasPorMes(placaCamion, mes, año);
+    public double obtenerNumeroDeToneladasTransportadasPorMes(@RequestParam String placaCamion, @RequestParam LocalDateTime fechaHora) {
+        return estadisticasService.obtenerNumeroDeToneladasTransportadasPorMes(placaCamion, fechaHora);
     }
 
     @GetMapping("/distancia-recorrida")
-    public double obtenerDistanciaRecorridaDiariamentePorCamion(@RequestParam String placaCamion, @RequestParam LocalDate fecha) {
+    public double obtenerDistanciaRecorridaDiariamentePorCamion(@RequestParam String placaCamion, @RequestParam LocalDateTime fecha) {
         return estadisticasService.obtenerDistanciaRecorridaDiariamentePorCamion(placaCamion, fecha);
     }
 }

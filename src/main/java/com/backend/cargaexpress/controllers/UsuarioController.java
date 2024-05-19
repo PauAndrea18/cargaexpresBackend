@@ -8,6 +8,8 @@ import com.backend.cargaexpress.entities.Usuario;
 import com.backend.cargaexpress.services.UsuarioService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +30,19 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioCreado = usuarioService.crearUsuario(usuario);
+            return new ResponseEntity<>(usuarioCreado, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creando el usuario", HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    /*@PostMapping
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
         return usuarioService.crearUsuario(usuario);
-    }
+    }*/
 
     @PutMapping("/{id}")
     public Usuario actualizarUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
@@ -47,8 +59,18 @@ public class UsuarioController {
         return usuarioService.obtenerUsuario(id);
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<Usuario> obtenerTodosLosUsuarios() {
         return usuarioService.obtenerTodosLosUsuarios();
+    }*/
+    
+    @GetMapping
+    public ResponseEntity<?> obtenerTodosLosUsuarios() {
+        try {
+            List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
+            return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error obteniendo los usuarios", HttpStatus.BAD_REQUEST);
+        }
     }
 }

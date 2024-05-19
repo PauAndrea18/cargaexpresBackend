@@ -6,6 +6,7 @@ package com.backend.cargaexpress.repositories;
 
 import com.backend.cargaexpress.entities.ReporteUbicacion;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -15,5 +16,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface ReporteUbicacionRepository extends MongoRepository<ReporteUbicacion, String> {
     List<ReporteUbicacion> findByRemisionId(String remisionId);
-    List<ReporteUbicacion> findByRemisionIdAndFecha(String remisionId, LocalDate fecha);
+    List<ReporteUbicacion> findByRemisionIdAndFechaHoraReporte(String remisionId, LocalDateTime fecha);
 }
